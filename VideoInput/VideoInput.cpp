@@ -3,7 +3,7 @@
 #include "opencv2/highgui.hpp"
 #include <iostream>
 
-void colorDetection(const cv::Mat& input, const cv::Scalar& lowerBound, const cv::Scalar& upperBound) {
+void colorDetection(const cv::Mat& input, const cv::Scalar& lowerBound, const cv::Scalar& upperBound, double& colorPercentage) {
     cv::Mat hsv;
     cv::cvtColor(input, hsv, cv::COLOR_BGR2HSV);
 
@@ -11,6 +11,11 @@ void colorDetection(const cv::Mat& input, const cv::Scalar& lowerBound, const cv
     cv::inRange(hsv, lowerBound, upperBound, mask);
 
     cv::imshow("Color Mask", mask);
+
+    // Calculate color percentage
+    int totalPixels = input.rows * input.cols;
+    int colorPixels = cv::countNonZero(mask);
+    colorPercentage = (static_cast<double>(colorPixels) / totalPixels) * 100.0;
 }
 
 int main() {
@@ -51,12 +56,16 @@ int main() {
         // Apply perspective transformation to get bird's-eye view
         cv::warpPerspective(frame, birdseye, perspectiveMatrix, frame.size());
 
-        cv::Scalar lowerBlue = cv::Scalar(0, 100, 100); // Adjust as needed
-        cv::Scalar upperBlue = cv::Scalar(30, 255, 255); // Adjust as needed
-        colorDetection(birdseye, lowerBlue, upperBlue);
+        cv::Scalar lowerBlue = cv::Scalar(0, 0, 0); // Adjust as needed
+        cv::Scalar upperBlue = cv::Scalar(105, 105, 105); // Adjust as needed
+        double colorPercentage;
+        colorDetection(frame, lowerBlue, upperBlue,colorPercentage);
+
+         std::string text = "Black color Percentage: " + std::to_string(colorPercentage) + "%";
+        cv::putText(frame, text, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 0), 2, cv::LINE_AA);
 
         cv::imshow("Video Input", frame);
-        cv::imshow("Bird's Eye View", birdseye);
+        //cv::imshow("Bird's Eye View", birdseye);
 
         if (cv::waitKey(1) == 27) { // Exit when the 'Esc' key is pressed
             break;
