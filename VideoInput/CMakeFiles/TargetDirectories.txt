@@ -1,3 +1,0 @@
-/home/mertp/Desktop/mosaicProject/source/MosaicFillingProject/VideoInput/CMakeFiles/rebuild_cache.dir
-/home/mertp/Desktop/mosaicProject/source/MosaicFillingProject/VideoInput/CMakeFiles/edit_cache.dir
-/home/mertp/Desktop/mosaicProject/source/MosaicFillingProject/VideoInput/CMakeFiles/VideoInput.dir
