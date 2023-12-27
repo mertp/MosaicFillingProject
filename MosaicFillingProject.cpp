@@ -40,6 +40,7 @@ int main() {
 
 
         std::vector<Tile> redTiles, blueTiles;
+        cv::VideoWriter mosaicWriter("mosaic_output.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 25, frame.size());
         double colorPercentage;
         detect.colorDetection(frame, lowerRed1, upperRed1, redTiles);
         detect.colorDetection(frame, lowerBlue1, upperBlue1, blueTiles);
@@ -64,6 +65,8 @@ int main() {
 
             // Print the color percentage to the console
             std::cout << text << std::endl;
+
+            mosaicWriter.write(frame);
         }
 
         cv::imshow("Video Input", frame);

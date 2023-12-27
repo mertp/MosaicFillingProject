@@ -21,7 +21,7 @@ public:
 class colordetection {
 
 public:
-    colordetection(); // Baþlatýcý ekleniyor.
+    colordetection(); // Baï¿½latï¿½cï¿½ ekleniyor.
     void colorDetection(const cv::Mat& input, const cv::Scalar& lowerBound, const cv::Scalar& upperBound, std::vector<Tile>& tiles);
 };
 #endif // COLORDETECTION_H
