@@ -11,7 +11,7 @@
 class Tile {
 public:
     cv::Rect boundingBox;
-    double colorPercentage;
+    double area;
 
     Tile(const cv::Rect& box);
 

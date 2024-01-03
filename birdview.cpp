@@ -36,7 +36,7 @@ void birdview::alignImages(cv::Mat& im1, cv::Mat& im2, cv::Mat& im1Reg, cv::Mat&
    
      Mat imMatches;
      drawMatches(im1, keypoints1, im2, keypoints2, matches, imMatches);
-     imshow("Matches", imMatches);
+     //imshow("Matches", imMatches);
     
      // Extract location of good matches
     std::vector<Point2f> points1, points2;
@@ -47,7 +47,7 @@ void birdview::alignImages(cv::Mat& im1, cv::Mat& im2, cv::Mat& im1Reg, cv::Mat&
         points2.push_back(keypoints2[matches[i].trainIdx].pt);
     }
 
-    // RANSAC(rastgele örnek konsensüsü) homografi matrisi
+    // RANSAC(rastgele ï¿½rnek konsensï¿½sï¿½) homografi matrisi
     h = findHomography(points1, points2, RANSAC);
 
     // Use homography to warp image

@@ -2,7 +2,7 @@
 #include "birdview.h"
 
 
-Tile::Tile(const cv::Rect& box) : boundingBox(box), colorPercentage(0.0) {}
+Tile::Tile(const cv::Rect& box) : boundingBox(box), area(0.0) {}
 
 void Tile::calculateColorPercentage(const cv::Mat& birdseye, const cv::Scalar& lowerBound, const cv::Scalar& upperBound) {
     cv::Mat mask, hsv;
@@ -11,8 +11,8 @@ void Tile::calculateColorPercentage(const cv::Mat& birdseye, const cv::Scalar& l
 
     //buraya bak
     int totalPixels = mask.rows * mask.cols;
-    int colorPixels = cv::countNonZero(mask);
-    colorPercentage = (static_cast<double>(colorPixels) / totalPixels) * 100.0;
+    //int colorPixels = cv::countNonZero(mask);
+    area = (static_cast<double>(totalPixels) );
 }
 
 colordetection::colordetection() {
