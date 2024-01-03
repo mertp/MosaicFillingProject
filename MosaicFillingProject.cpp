@@ -33,24 +33,16 @@ int main()
 
     Mat frame, imReg, h;
     // Define the codec and create VideoWriter objects
+    int frameWidth = 540;
+    int frameHeight = 764;
+    // Video dosyasını kaydetmek için VideoWriter oluşturun
+    cv::VideoWriter videoWriter("/Users/Hp/Desktop/MosaicFillingProject/aligned_output.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 5, cv::Size(frameWidth, frameHeight));
 
-    int codec = cv::VideoWriter::fourcc('X', '2', '6', '4');
-    double fps = 15.0;
-    // cv::Size frameSize(cap.get(cv::CAP_PROP_FRAME_WIDTH), cap.get(cv::CAP_PROP_FRAME_HEIGHT));
-
-    // int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
-    // int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-
-    cv::Size frameSize(540, 764);
-    cout << frameSize << endl;
-    // cv::VideoWriter birdVideo("3output_video.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 10, frameSize);
-
-    /*if (!birdVideo.isOpened())
-    {
-        cerr << "Could not open the output video file for write\n";
+    if (!videoWriter.isOpened()) {
+        std::cerr << "Error: Video file could not be opened for writing." << std::endl;
         return -1;
     }
-    */
+
     while (true)
     {
         cap >> frame;
@@ -102,22 +94,23 @@ int main()
 
         view.alignImages(frame, imReference, imReg, h);
 
-        // imshow kullanarak iki pencereyi açın
-        imshow("Aligned Frame", imReg);
-        cv::Size imRegSize(imReg.cols, imReg.rows);
-        cout << imRegSize << " imreg size" << endl;
-        // birdVideo.write(imReg);
+        // imReg'in boyutlarını kontrol et ve frameWidth ve frameHeight ile uyumlu hale getir
+        cv::resize(imReg, imReg, cv::Size(frameWidth, frameHeight));
+
+        cv::imshow("Aligned Frame", imReg);
+        // Video dosyasına yazma
+        videoWriter.write(imReg);
 
         if (waitKey(1) == 27)
         {
-            // birdVideo.release();
 
             // Break the loop if Esc is pressed
             break;
         }
     }
 
-    // birdseyeVideo.release();
+
+    videoWriter.release();
     cap.release();
 
     destroyAllWindows();
